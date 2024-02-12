@@ -1,49 +1,29 @@
 {
-  "name": "react-supabase-login",
+  "name": "react-website-admin-example",
   "version": "0.1.0",
-  "dependencies": {
-    "@mantine/core": "^7.5.2",
-    "@mantine/form": "^7.5.2",
-    "@mantine/hooks": "^7.5.2",
-    "@mantinex/mantine-logo": "^1.0.1",
-    "@tabler/icons-react": "^2.47.0",
-    "@testing-library/jest-dom": "^5.17.0",
-    "@testing-library/react": "^13.4.0",
-    "@testing-library/user-event": "^13.5.0",
-    "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "react-router-dom": "^6.22.0",
-    "react-scripts": "5.0.1",
-    "web-vitals": "^2.1.4"
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
-  },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
-  },
   "private": true,
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@mantine/core": "7.5.1",
+    "@mantine/hooks": "7.5.1",
+    "next": "14.0.1",
+    "react": "18.2.0",
+    "react-dom": "18.2.0"
   },
   "devDependencies": {
-    "postcss": "^8.4.35",
-    "postcss-preset-mantine": "^1.13.0",
-    "postcss-simple-vars": "^7.0.1"
-  }
+    "@types/node": "20.8.10",
+    "@types/react": "18.2.35",
+    "@types/react-dom": "18.2.14",
+    "eslint": "8.53.0",
+    "eslint-config-next": "14.0.1",
+    "postcss": "^8.4.31",
+    "postcss-preset-mantine": "1.13.0",
+    "postcss-simple-vars": "^7.0.1",
+    "typescript": "5.2.2"
+  },
+  "packageManager": "yarn@4.0.1"
 }
