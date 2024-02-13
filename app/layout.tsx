@@ -25,7 +25,7 @@ export default function RootLayout({
             </head>
             <body>
                 <MantineProvider theme={theme} forceColorScheme={'dark'}>
-                    <Shell>{children}</Shell>
+                    {children}
                 </MantineProvider>
             </body>
         </html>
