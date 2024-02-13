@@ -5,7 +5,7 @@ import classes from './NavbarSimple.module.css';
 import Link from "next/link";
 
 const data = [
-    { link: '/', label: 'Home', icon: IconHome },
+    { link: '/dashboard', label: 'Home', icon: IconHome },
     { link: '/customers', label: 'Customers', icon: IconUserHexagon },
 ];
 
