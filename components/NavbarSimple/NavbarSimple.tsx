@@ -1,16 +1,17 @@
 'use client'
-import {useRef, useState} from 'react';
-import {IconHome, IconLogout, IconUserHexagon,} from '@tabler/icons-react';
+import {useState} from 'react';
+import {IconHome, IconUserHexagon,} from '@tabler/icons-react';
 import classes from './NavbarSimple.module.css';
 import Link from "next/link";
+import {UserButton} from "@/components/UserButton/UserButton";
+import {User} from "@supabase/gotrue-js";
 
 const data = [
     {link: '/dashboard', label: 'Home', icon: IconHome},
     {link: '/customers', label: 'Customers', icon: IconUserHexagon},
 ];
 
-export default function NavbarSimple() {
-    const formRef = useRef();
+export default function NavbarSimple({ user }: {user: User}) {
     const [active, setActive] = useState('Billing');
 
     const links = data.map((item) => (
@@ -25,13 +26,6 @@ export default function NavbarSimple() {
         </Link>
     ));
 
-    const handleClick = (event: any) => {
-        event.preventDefault()
-        if(formRef.current) {
-            formRef.current.submit()
-        }
-    }
-
     return (
         <>
             <div className={classes.navbarMain}>
@@ -44,12 +38,7 @@ export default function NavbarSimple() {
                 {/*    <span>Change account</span>*/}
                 {/*</a>*/}
 
-                <form ref={formRef} action="/auth/signout" method="post"></form>
-
-                <a href="#" className={classes.link} onClick={handleClick}>
-                    <IconLogout className={classes.linkIcon} stroke={1.5}/>
-                    <span>Logout</span>
-                </a>
+                <UserButton user={user}/>
             </div>
         </>
     );

@@ -2,10 +2,11 @@
 import { AppShell, Burger } from '@mantine/core';
 import { useDisclosure } from '@mantine/hooks';
 import NavbarSimple from "../NavbarSimple/NavbarSimple";
+import {User} from "@supabase/gotrue-js";
 
 
-export function Shell({ children }: any) {
-    const [opened, { toggle }] = useDisclosure(false);
+export function Shell({ user, children }: { user: User, children: React.ReactNode }) {
+    const [opened, { toggle }] = useDisclosure(false)
 
     return (<AppShell
         header={{height: 60}}
@@ -27,7 +28,7 @@ export function Shell({ children }: any) {
         </AppShell.Header>
 
         <AppShell.Navbar p="xs">
-            <NavbarSimple/>
+            <NavbarSimple user={user}/>
         </AppShell.Navbar>
 
         <AppShell.Main>
