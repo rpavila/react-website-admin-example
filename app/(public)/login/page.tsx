@@ -2,25 +2,38 @@
 import {Anchor, Button, Checkbox, Container, Group, Paper, PasswordInput, Text, TextInput, Title} from '@mantine/core';
 import classes from './Login.module.css';
 import {createClientComponentClient} from "@supabase/auth-helpers-nextjs";
-import {useState} from "react";
 import {Database} from "../../database.types";
-import type {SignInWithPasswordCredentials} from "@supabase/gotrue-js/src/lib/types";
 import {useDisclosure} from "@mantine/hooks";
 import {cleanNotifications, notifications} from '@mantine/notifications';
 import {NotificationData} from "@mantine/notifications/lib/notifications.store";
+import {zodResolver} from 'mantine-form-zod-resolver';
+import {z} from 'zod';
+import {useForm} from "@mantine/form";
+import {useRouter} from "next/navigation";
 
 export default function Login() {
+    const router = useRouter()
     const supabase = createClientComponentClient<Database>()
     const [loading, {toggle, close}] = useDisclosure()
-    const [credentials, setCredentials] = useState<SignInWithPasswordCredentials>({})
+    const schema = z.object({
+        email: z.string({required_error: 'This field is required'}).email({message: 'Invalid email'}),
+        password: z.string({required_error: 'This field is required'}),
+    });
+    const form = useForm({
+        initialValues: {
+            email: 'user-test01@mailinator.com',
+            password: 'admin123/*+',
+        },
+        validate: zodResolver(schema),
+    });
 
-    const onLogin = () => {
+    const onSubmit = (values: any) => {
         cleanNotifications()
         toggle()
-        supabase.auth.signInWithPassword(credentials).then((r) => {
+        supabase.auth.signInWithPassword(values).then((r) => {
             close()
             let messageData: NotificationData = {
-                autoClose: false,
+                autoClose: true,
                 message: '',
                 color: 'green',
                 style: {
@@ -43,6 +56,9 @@ export default function Login() {
                 }
             }
             notifications.show(messageData)
+            if(!error){
+                router.push('/dashboard')
+            }
         })
     }
 
@@ -59,24 +75,26 @@ export default function Login() {
                     </Anchor>
                 </Text>
 
-                <Paper withBorder shadow="md" p={30} mt={30} radius="md">
-                    <TextInput label="Email" placeholder="you@mantine.dev" required onChange={(e) => {
-                        setCredentials({...credentials, email: e.currentTarget.value})
-                    }}/>
-                    <PasswordInput label="Password" placeholder="Your password" required mt="md" onChange={(e) => {
-                        setCredentials({...credentials, password: e.currentTarget.value})
-                    }}/>
-                    <Group justify="space-between" mt="lg">
-                        <Checkbox label="Remember me"/>
-                        <Anchor component="button" size="sm">
-                            Forgot password?
-                        </Anchor>
-                    </Group>
-                    <Button fullWidth mt="xl" loading={loading} onClick={() => {
-                        onLogin()
-                    }}>
-                        Sign in
-                    </Button>
+                <Paper withBorder shadow="lg" p={30} mt={30} radius="md">
+                    <form onSubmit={form.onSubmit(onSubmit)}>
+                        <TextInput label="Email" placeholder="you@mantine.dev" {...form.getInputProps('email')}
+                                   onChange={(e) => {
+                                       form.setValues({email: e.currentTarget.value})
+                                   }}/>
+                        <PasswordInput label="Password" placeholder="Your password"
+                                       mt="md" {...form.getInputProps('password')} onChange={(e) => {
+                            form.setValues({password: e.currentTarget.value})
+                        }}/>
+                        <Group justify="space-between" mt="lg">
+                            <Checkbox label="Remember me"/>
+                            <Anchor component="button" size="sm">
+                                Forgot password?
+                            </Anchor>
+                        </Group>
+                        <Button type={'submit'} fullWidth mt="xl" loading={loading}>
+                            Sign in
+                        </Button>
+                    </form>
                 </Paper>
             </Container>
         </>
