@@ -1,7 +1,8 @@
 import '@mantine/core/styles.css';
-import {Shell} from "../components/Shell/Shell";
 import {theme} from "../theme";
 import {ColorSchemeScript, MantineProvider} from "@mantine/core";
+import {Notifications} from "@mantine/notifications";
+
 
 export const metadata = {
     title: 'Next.js',
@@ -24,7 +25,8 @@ export default function RootLayout({
                 />
             </head>
             <body>
-                <MantineProvider theme={theme} forceColorScheme={'dark'}>
+                <MantineProvider theme={theme}>
+                    <Notifications />
                     {children}
                 </MantineProvider>
             </body>
