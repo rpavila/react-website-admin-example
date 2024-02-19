@@ -1,8 +1,9 @@
 import {UnstyledButton, Group, Avatar, Text, rem, Collapse} from '@mantine/core';
-import {IconChevronRight, IconLogout} from '@tabler/icons-react';
+import {IconChevronRight, IconLogout, IconUser} from '@tabler/icons-react';
 import classes from './UserButton.module.css';
 import {useRef, useState} from "react";
 import {User} from "@supabase/gotrue-js";
+import Link from "next/link";
 
 export function UserButton({ user }: { user: User }) {
     const formRef = useRef();
@@ -39,6 +40,10 @@ export function UserButton({ user }: { user: User }) {
             </UnstyledButton>
             <form ref={formRef} action="/auth/signout" method="post"></form>
             <Collapse in={opened}>
+                <Link href="/account" className={classes.link}>
+                    <IconUser className={classes.linkIcon} stroke={1.5}/>
+                    <span>Profile</span>
+                </Link>
                 <a href="#" className={classes.link} onClick={handleClick}>
                     <IconLogout className={classes.linkIcon} stroke={1.5}/>
                     <span>Logout</span>
