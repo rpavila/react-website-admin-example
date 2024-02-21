@@ -3,6 +3,7 @@ import {Shell} from "@/components/Shell/Shell";
 import {cookies} from 'next/headers'
 import {Database} from '@/lib/database.types'
 import {createServerComponentClient} from "@supabase/auth-helpers-nextjs";
+import {redirect} from "next/navigation";
 
 export const metadata = {
     title: 'Next.js',
@@ -19,6 +20,10 @@ export default async function AdminLayout({
     const {
         data: {user},
     } = await supabase.auth.getUser()
+
+    if(!user){
+        redirect('/auth/login')
+    }
 
     return (
         <Shell user={user}>{children}</Shell>
