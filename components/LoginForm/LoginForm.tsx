@@ -15,7 +15,7 @@ import {Database} from "@/lib/database.types";
 export default function LoginForm() {
     const router = useRouter()
     const supabase = createClientComponentClient<Database>()
-    const [loading, {toggle, close}] = useDisclosure(false)
+    const [loading, {toggle}] = useDisclosure(false)
     const schema = z.object({
         email: z.string({required_error: 'This field is required'}).email({message: 'Invalid email'}),
         password: z.string({required_error: 'This field is required'}),
@@ -42,7 +42,7 @@ export default function LoginForm() {
                     right: '1rem'
                 }
             }
-            const {data, error} = r
+            const {error} = r
             if (error) {
                 const {name: title, message} = error
                 messageData = {
