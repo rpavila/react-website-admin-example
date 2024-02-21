@@ -9,6 +9,7 @@ import {cleanNotifications, notifications} from "@mantine/notifications";
 import {NotificationData} from "@mantine/notifications/lib/notifications.store";
 import {Anchor, Button, Checkbox, Container, Group, Paper, PasswordInput, Text, TextInput, Title} from "@mantine/core";
 import classes from "@/components/LoginForm/LoginForm.module.css";
+import {Database} from "@/lib/database.types";
 
 
 export default function LoginForm() {

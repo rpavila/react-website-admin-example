@@ -17,7 +17,7 @@ export default function AccountForm({user}: { user: User | null }) {
         try {
             setLoading(true)
 
-            const {user_metadata}: { user_metadata: UserMetadata } = user
+            const {user_metadata}: { user_metadata: UserMetadata|null } = user || { user_metadata: null }
             if (user_metadata) {
                 setFullname(user_metadata.full_name)
                 setUsername(user_metadata.username)
@@ -56,7 +56,7 @@ export default function AccountForm({user}: { user: User | null }) {
                     avatar_url,
                     updated_at: new Date().toISOString(),
                 }
-            })
+            } as any)
             if (error) throw error
             alert('Profile updated!')
         } catch (error) {

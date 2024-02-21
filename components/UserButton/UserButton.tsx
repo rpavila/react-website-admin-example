@@ -1,18 +1,19 @@
-import {UnstyledButton, Group, Avatar, Text, rem, Collapse} from '@mantine/core';
+import {Avatar, Collapse, Group, rem, Text, UnstyledButton} from '@mantine/core';
 import {IconChevronRight, IconLogout, IconUser} from '@tabler/icons-react';
 import classes from './UserButton.module.css';
-import {useRef, useState} from "react";
+import {createRef, useState} from "react";
 import {User} from "@supabase/gotrue-js";
 import Link from "next/link";
 
 export function UserButton({ user }: { user: User }) {
-    const formRef = useRef();
+    const formRef = createRef<HTMLFormElement>();
     const [opened, setOpened] = useState( false);
 
     const handleClick = (event: any) => {
         event.preventDefault()
-        if(formRef.current) {
-            formRef.current.submit()
+        const { current }: { current: any} = formRef
+        if(current) {
+            current.submit()
         }
     }
 
