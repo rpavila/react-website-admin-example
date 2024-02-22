@@ -4,15 +4,17 @@ import {Session} from "@supabase/gotrue-js";
 
 export const customerApi = createApi({
     reducerPath: 'customers',
+    tagTypes: ['Customer'],
     baseQuery: fetchBaseQuery({
         baseUrl: `${process.env.NEXT_PUBLIC_SUPABASE_URL}/rest/v1`,
         prepareHeaders: (headers, {getState}) => {
             // By default, if we have a token in the store, let's use that for authenticated requests
             const {session}: { session: Session | null } = (getState() as ReduxState).auth
-            const {access_token, token_type}: {
+            const {token_type}: {
                 access_token: string | null,
                 token_type: string | null
             } = session || {access_token: null, token_type: null}
+            const access_token = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
             if (access_token) {
                 headers.set('apikey', access_token)
                 headers.set('authentication', `${token_type} ${access_token}`)
@@ -22,7 +24,8 @@ export const customerApi = createApi({
     }),
     endpoints: (builder) => ({
         getCustomers: builder.query({
-            query: () => '/customers'
+            query: () => '/customer',
+            providesTags: (result, error, id) => [{ type: 'Customer', id }]
         })
     })
 })
