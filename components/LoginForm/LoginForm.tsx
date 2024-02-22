@@ -10,10 +10,12 @@ import {NotificationData} from "@mantine/notifications/lib/notifications.store";
 import {Anchor, Button, Checkbox, Container, Group, Paper, PasswordInput, Text, TextInput, Title} from "@mantine/core";
 import classes from "@/components/LoginForm/LoginForm.module.css";
 import {Database} from "@/lib/database.types";
+import { setSession, useDispatch } from "@/lib/redux";
 
 
 export default function LoginForm() {
     const router = useRouter()
+    const dispatch = useDispatch()
     const supabase = createClientComponentClient<Database>()
     const [loading, {toggle}] = useDisclosure(false)
     const schema = z.object({
@@ -42,7 +44,7 @@ export default function LoginForm() {
                     right: '1rem'
                 }
             }
-            const {error} = r
+            const {error, data: { session } } = r
             if (error) {
                 const {name: title, message} = error
                 messageData = {
@@ -57,6 +59,7 @@ export default function LoginForm() {
             }
             notifications.show(messageData)
             if(!error){
+                dispatch(setSession(session))
                 cleanNotifications()
                 router.push('/dashboard')
             }
