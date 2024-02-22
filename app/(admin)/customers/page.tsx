@@ -1,5 +1,5 @@
-
+import CustomerList from "@/components/Customer/List/List";
 
 export default function Customers() {
-    return (<h2>Customers</h2>)
+    return (<CustomerList />)
 }
