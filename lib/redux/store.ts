@@ -11,14 +11,15 @@ import {
 } from "react-redux";
 
 /* Instruments */
-import { reducer } from "./rootReducer";
+import {reducer} from "./rootReducer";
+import {customerApi} from "@/lib/redux/api/customerApi";
 // import { middleware } from "./middleware";
 
 export const reduxStore = configureStore({
     reducer,
-    // middleware: (getDefaultMiddleware) => {
-    //     return getDefaultMiddleware().concat(middleware);
-    // },
+    middleware: (getDefaultMiddleware) => {
+        return getDefaultMiddleware().concat(customerApi.middleware);
+    },
 });
 export const useDispatch = () => useReduxDispatch<ReduxDispatch>();
 export const useSelector: TypedUseSelectorHook<ReduxState> = useReduxSelector;
