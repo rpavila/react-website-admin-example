@@ -17,7 +17,6 @@ import {
 } from "@mantine/core";
 import {useState} from "react";
 import {Customer} from "@/lib/redux/model";
-import {faker} from '@faker-js/faker';
 import cx from 'clsx';
 import classes from './List.module.css';
 
@@ -39,18 +38,18 @@ export default function CustomerList() {
         </Table.Tr>
     ));
 
-    const saveMany = () => {
-        const a = Array.from({length: 50}, (_, i) => ({
-            first_name: faker.person.firstName(),
-            last_name: faker.person.lastName(),
-            email_address: faker.internet.email(),
-            phone: faker.phone.number()
-        }))
-        console.log(a)
-        // a.forEach(item => {
-        //     updateCustomer(item)
-        // })
-    }
+    // const saveMany = () => {
+    //     const a = Array.from({length: 50}, (_, i) => ({
+    //         first_name: faker.person.firstName(),
+    //         last_name: faker.person.lastName(),
+    //         email_address: faker.internet.email(),
+    //         phone: faker.phone.number()
+    //     }))
+    //     console.log(a)
+    //     // a.forEach(item => {
+    //     //     updateCustomer(item)
+    //     // })
+    // }
 
     return (
         <>
