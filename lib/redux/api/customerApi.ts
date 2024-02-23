@@ -1,4 +1,4 @@
-import {createApi, fetchBaseQuery, BaseQueryApi} from "@reduxjs/toolkit/query/react";
+import {createApi, fetchBaseQuery} from "@reduxjs/toolkit/query/react";
 import {ReduxState} from "@/lib/redux";
 import {Session} from "@supabase/gotrue-js";
 import {Customer} from "@/lib/redux/model";
@@ -26,7 +26,7 @@ export const customerApi = createApi({
     endpoints: (builder) => ({
         getCustomers: builder.query({
             query: () => '/customer',
-            providesTags: (result, error, id) => [{ type: 'Customer', id }]
+            providesTags: (result, error, id) => [{type: 'Customer', id}]
         }),
         saveCustomer: builder.mutation<Customer, Partial<Customer> & Pick<Customer, 'id'>>({
             query: ({...params}) => ({
@@ -38,4 +38,4 @@ export const customerApi = createApi({
     })
 })
 
-export const {useGetCustomersQuery, useSaveCustomerMutation } = customerApi
+export const {useGetCustomersQuery, useSaveCustomerMutation} = customerApi
