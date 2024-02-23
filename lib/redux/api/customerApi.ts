@@ -1,6 +1,7 @@
-import {createApi, fetchBaseQuery} from "@reduxjs/toolkit/query/react";
+import {createApi, fetchBaseQuery, BaseQueryApi} from "@reduxjs/toolkit/query/react";
 import {ReduxState} from "@/lib/redux";
 import {Session} from "@supabase/gotrue-js";
+import {Customer} from "@/lib/redux/model";
 
 export const customerApi = createApi({
     reducerPath: 'customers',
@@ -26,8 +27,15 @@ export const customerApi = createApi({
         getCustomers: builder.query({
             query: () => '/customer',
             providesTags: (result, error, id) => [{ type: 'Customer', id }]
+        }),
+        saveCustomer: builder.mutation<Customer, Partial<Customer> & Pick<Customer, 'id'>>({
+            query: ({...params}) => ({
+                url: '/customer',
+                method: 'POST',
+                body: params
+            })
         })
     })
 })
 
-export const {useGetCustomersQuery} = customerApi
+export const {useGetCustomersQuery, useSaveCustomerMutation } = customerApi
