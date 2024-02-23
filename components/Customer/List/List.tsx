@@ -1,58 +1,82 @@
 'use client'
 
-import {useGetCustomersQuery} from "@/lib/redux/api/customerApi";
-import {Box, Button, LoadingOverlay, Table} from "@mantine/core";
+import {useGetCustomersQuery, useSaveCustomerMutation} from "@/lib/redux/api/customerApi";
+import {
+    ActionIcon,
+    Avatar,
+    Badge,
+    Box,
+    Button,
+    Card,
+    Group,
+    LoadingOverlay,
+    Progress,
+    ScrollArea,
+    Table,
+    Text, Title
+} from "@mantine/core";
+import {useState} from "react";
+import {Customer} from "@/lib/redux/model";
+import {faker} from '@faker-js/faker';
+import cx from 'clsx';
+import classes from './List.module.css';
 
 export default function CustomerList() {
-    const { data, error, isLoading, refetch, isFetching } = useGetCustomersQuery({}, {
-        pollingInterval: 3000,
+    const [scrolled, setScrolled] = useState(false);
+    const {data, error = undefined, isLoading = false, refetch, isFetching = false} = useGetCustomersQuery({}, {
+        pollingInterval: 0,
         refetchOnMountOrArgChange: true,
         skip: false,
-        selectFromResult: ({ data }) => ({
-            posts: data ?? [],
-        }),
     })
-    console.log(data)
-    console.log(error)
-    console.log(isLoading)
+    const [updateCustomer] = useSaveCustomerMutation()
 
-    // const elements = [
-    //     { position: 6, mass: 12.011, symbol: 'C', name: 'Carbon' },
-    //     { position: 7, mass: 14.007, symbol: 'N', name: 'Nitrogen' },
-    //     { position: 39, mass: 88.906, symbol: 'Y', name: 'Yttrium' },
-    //     { position: 56, mass: 137.33, symbol: 'Ba', name: 'Barium' },
-    //     { position: 58, mass: 140.12, symbol: 'Ce', name: 'Cerium' },
-    // ];
-
-    const rows = data.map((element) => (
-        <Table.Tr key={element.name}>
-            <Table.Td>{element.position}</Table.Td>
-            <Table.Td>{element.name}</Table.Td>
-            <Table.Td>{element.symbol}</Table.Td>
-            <Table.Td>{element.mass}</Table.Td>
+    const rows = data?.map(({id, first_name, last_name, email_address, phone}: Customer) => (
+        <Table.Tr key={id}>
+            <Table.Td>{first_name}</Table.Td>
+            <Table.Td>{last_name}</Table.Td>
+            <Table.Td>{email_address}</Table.Td>
+            <Table.Td>{phone}</Table.Td>
         </Table.Tr>
     ));
 
+    const saveMany = () => {
+        const a = Array.from({length: 50}, (_, i) => ({
+            first_name: faker.person.firstName(),
+            last_name: faker.person.lastName(),
+            email_address: faker.internet.email(),
+            phone: faker.phone.number()
+        }))
+        console.log(a)
+        // a.forEach(item => {
+        //     updateCustomer(item)
+        // })
+    }
+
     return (
         <>
-            <h2>Customers</h2>
+            <Group justify="space-between" mb={'sm'}>
+                <Title order={3}>Customers</Title>
+                <Button variant={'light'} disabled={isLoading || isFetching} onClick={() => refetch()}>Refresh</Button>
+            </Group>
 
             <Box pos="relative">
-                <LoadingOverlay visible={isLoading || isFetching} zIndex={1000} overlayProps={{ radius: "sm", blur: 2 }} />
+                <LoadingOverlay visible={isLoading || isFetching} zIndex={1000} overlayProps={{radius: "sm", blur: 2}}/>
 
-                <Button onClick={() => refetch()}>Refresh</Button>
-
-                <Table>
-                    <Table.Thead>
-                        <Table.Tr>
-                            <Table.Th>Element position</Table.Th>
-                            <Table.Th>Element name</Table.Th>
-                            <Table.Th>Symbol</Table.Th>
-                            <Table.Th>Atomic mass</Table.Th>
-                        </Table.Tr>
-                    </Table.Thead>
-                    <Table.Tbody>{rows}</Table.Tbody>
-                </Table>
+                <Card withBorder padding="sm" radius="md">
+                    <ScrollArea h={300} onScrollPositionChange={({y}) => setScrolled(y !== 0)}>
+                        <Table>
+                            <Table.Thead className={cx(classes.header, { [classes.scrolled]: scrolled })}>
+                                <Table.Tr>
+                                    <Table.Th>First name</Table.Th>
+                                    <Table.Th>Last name</Table.Th>
+                                    <Table.Th>Email address</Table.Th>
+                                    <Table.Th>Phone</Table.Th>
+                                </Table.Tr>
+                            </Table.Thead>
+                            <Table.Tbody>{rows}</Table.Tbody>
+                        </Table>
+                    </ScrollArea>
+                </Card>
             </Box>
         </>
     )
