@@ -7,7 +7,7 @@ import {useSaveCustomerMutation} from "@/lib/redux/api/customerApi";
 export const CustomerModal = ({
                                   context,
                                   id,
-                              }: ContextModalProps<{ children: React.ReactNode }>) => {
+                              }: ContextModalProps<{ children?: React.ReactNode }>) => {
 
     const [updateCustomer] = useSaveCustomerMutation()
 

@@ -68,9 +68,9 @@ export default function CustomerList() {
                 </Card>
             </Box>
 
-            <ModalsProvider
-                modals={{customerModal: CustomerModal /* ...other modals */}}
-            ></ModalsProvider>
+            <ModalsProvider modals={{customerModal: CustomerModal /* ...other modals */}}>
+                <></>
+            </ModalsProvider>
         </>
     )
 }
