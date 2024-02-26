@@ -493,6 +493,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@supabase/ssr@npm:^0.1.0":
+  version: 0.1.0
+  resolution: "@supabase/ssr@npm:0.1.0"
+  dependencies:
+    cookie: "npm:^0.5.0"
+    ramda: "npm:^0.29.0"
+  peerDependencies:
+    "@supabase/supabase-js": ^2.33.1
+  checksum: 1ae3459cbdd06af01475dbeca7375dc2d5ac5e6534244ddfcc1fbdaae90af766a86fdc7ed660b9f205a9802265f0f04baeaab8801fd4d7cf1e74dc5218325bae
+  languageName: node
+  linkType: hard
+
 "@supabase/storage-js@npm:2.5.5":
   version: 2.5.5
   resolution: "@supabase/storage-js@npm:2.5.5"
@@ -1094,6 +1106,13 @@ __metadata:
   version: 0.0.1
   resolution: "concat-map@npm:0.0.1"
   checksum: c996b1cfdf95b6c90fee4dae37e332c8b6eb7d106430c17d538034c0ad9a1630cb194d2ab37293b1bdd4d779494beee7786d586a50bd9376fd6f7bcc2bd4c98f
+  languageName: node
+  linkType: hard
+
+"cookie@npm:^0.5.0":
+  version: 0.5.0
+  resolution: "cookie@npm:0.5.0"
+  checksum: c01ca3ef8d7b8187bae434434582288681273b5a9ed27521d4d7f9f7928fe0c920df0decd9f9d3bbd2d14ac432b8c8cf42b98b3bdd5bfe0e6edddeebebe8b61d
   languageName: node
   linkType: hard
 
@@ -3231,6 +3250,13 @@ __metadata:
   languageName: node
   linkType: hard
 
+"ramda@npm:^0.29.0":
+  version: 0.29.1
+  resolution: "ramda@npm:0.29.1"
+  checksum: 5de53a07400959c1a704c366ec52b1b8cd9a444dc1f9cdf17d607e0b9eeaa38cbaea309d43e59dbd7f36731ba977a64d40092555c0e7c2d4a41e8e922239c0ba
+  languageName: node
+  linkType: hard
+
 "react-dom@npm:18.2.0":
   version: 18.2.0
   resolution: "react-dom@npm:18.2.0"
@@ -3378,6 +3404,7 @@ __metadata:
     "@next/bundle-analyzer": "npm:^14.1.0"
     "@reduxjs/toolkit": "npm:^2.2.1"
     "@supabase/auth-helpers-nextjs": "npm:^0.9.0"
+    "@supabase/ssr": "npm:^0.1.0"
     "@supabase/supabase-js": "npm:^2.39.6"
     "@tabler/icons-react": "npm:^2.47.0"
     "@types/node": "npm:20.11.5"
