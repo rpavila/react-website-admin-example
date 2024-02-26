@@ -1,8 +1,6 @@
 import '@mantine/core/styles.css';
 import {Shell} from "@/components/Shell/Shell";
-import {cookies} from 'next/headers'
-import {Database} from '@/lib/database.types'
-import {createServerComponentClient} from "@supabase/auth-helpers-nextjs";
+import { createClient } from "@/lib/utils/supabase/server"
 import {redirect} from "next/navigation";
 
 export const metadata = {
@@ -15,16 +13,14 @@ export default async function AdminLayout({
                                           }: {
     children: React.ReactNode
 }) {
-    const supabase = createServerComponentClient<Database>({cookies})
+    const supabase = createClient()
 
-    const {
-        data: {user},
-    } = await supabase.auth.getUser()
-
-    if(!user){
-        redirect('/auth/login')
+    const { data, error } = await supabase.auth.getUser()
+    if (error || !data?.user) {
+        redirect('/')
     }
 
+    const { user } = data
     return (
         <Shell user={user}>{children}</Shell>
     )
