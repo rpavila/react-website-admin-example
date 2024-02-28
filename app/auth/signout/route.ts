@@ -1,8 +1,8 @@
-import {type NextRequest} from 'next/server'
+import {type NextRequest, NextResponse} from 'next/server'
 import {createClient} from '@/lib/utils/supabase/server'
-import {redirect} from "next/navigation";
 
 export async function POST(req: NextRequest) {
+    const requestUrl = new URL(req.url)
     const supabase = createClient()
 
     // Check if we have a session
@@ -14,5 +14,7 @@ export async function POST(req: NextRequest) {
         await supabase.auth.signOut()
     }
 
-    return redirect(`/`)
+    return NextResponse.redirect(`/`, {
+        status: 301,
+    })
 }
