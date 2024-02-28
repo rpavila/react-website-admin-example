@@ -29,7 +29,6 @@ export default function LoginForm() {
     useEffect(() => {
         if (searchParams.size > 0) {
             const error = searchParams.get('error')
-            console.log(error)
             if (error) {
                 notifications.show({
                     autoClose: true,
