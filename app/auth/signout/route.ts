@@ -14,7 +14,7 @@ export async function POST(req: NextRequest) {
         await supabase.auth.signOut()
     }
 
-    return NextResponse.redirect(`${requestUrl.origin}/`, {
+    return NextResponse.redirect(`${process.env.NEXT_PUBLIC_DOMAIN}/`, {
         status: 301,
     })
 }
